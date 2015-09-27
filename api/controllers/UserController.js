@@ -30,10 +30,12 @@ module.exports = {
             for(var i = 0; i < subscribers.length; i++){
                 returnUser.rooms[room].users.push(sails.sockets.get(subscribers[i]).nickname);
             }
-            console.log("broadcasting join of " + room);
+            //console.log("broadcasting join of " + room);
             sails.sockets.broadcast(room, "join", {nickname: user.nickname, room: room});
-            returnUser.rooms[room].users.push(user.nickname);
-            
+            if(returnUser.rooms[room].users.indexOf(user.nickname) < 0){
+                returnUser.rooms[room].users.push(user.nickname);
+            }
+            //console.log(returnUser.rooms[room]);
             //join socket room
             sails.sockets.join(req.socket, room);            
         }

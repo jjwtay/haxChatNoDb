@@ -77,7 +77,13 @@ angular.module("haxChatNoDb")
         console.log(msg);
         $rootScope.$broadcast("User.update", msg);
     });
-    
+    io.socket.on("connect", function(msg){
+        join(meStored.nickname, function(user){
+            console.log("got back", user);
+            //return callback(me);
+        });        
+
+    });
     return {
         join: join,
         me: me,
