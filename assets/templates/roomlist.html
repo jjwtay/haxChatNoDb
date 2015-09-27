@@ -1,0 +1,32 @@
+<ion-header-bar align-title="center">
+    <h1 class="title">{{data.me.nickname}}</h1>
+</ion-header-bar>
+<ion-content>
+<form ng-submit="join()">
+<div class="list">
+
+  <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Room name" ng-model="data.join">
+    </label>
+    <a class="button button-small" ng-click="join()">
+        Join Room
+    </a>
+  </div>
+
+</div>
+    </form>
+    <ion-list >
+        <ion-item ng-repeat="(key, value) in data.me.rooms" href="#/room/{{key}}">
+            {{key}}({{value.users.length}})
+            <!--<ion-delete-button class="ion-minus-circled" ng-click="delete(room)">
+            </ion-delete-button>-->
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer-bar class='bar-light'>
+    <div class="button-bar">
+        <a class="button button-icon icon ion-ios-chatboxes" href="#/roomlist"></a>
+        <a class="button button-icon icon ion-settings" href="#/settings"></a>
+    </div>    
+</ion-footer-bar>

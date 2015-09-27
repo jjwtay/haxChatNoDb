@@ -1,0 +1,54 @@
+
+
+
+<ion-side-menus expose-aside-when="large">
+    <ion-side-menu side="left" >
+        <div class="list">
+            <div class="item" ng-repeat="user in data.me.rooms[roomname].users">{{user}}</div>
+        </div>
+    </ion-side-menu>
+    <ion-side-menu-content>
+        <!--<div class="bar bar-header bar-light">
+            <h1 class="title">{{room.name}}</h1>
+        </div>-->
+        <ion-header-bar><h1 class="title">{{roomname}}</h1></ion-header-bar>
+        <ion-content has-header="true">
+
+            
+
+        <form ng-submit="message()">
+            <div class="list">
+
+              <div class="item item-input-inset">
+                
+                    <label class="item-input-wrapper">
+                        <input type="text" placeholder="New Message" ng-model="data.newmessage">
+                    </label>
+                    <a class="button button-small" ng-click="message()">
+                        Send
+                    </a>
+                  
+              </div>
+</form>
+            </div>
+                <ion-list >
+                    <ion-item ng-repeat="chat in data.me.rooms[roomname].chats|orderBy:'timestamp':true">
+                        <!--<p><strong>{{chat.nick}}</strong> : {{chat.message}}</p>
+                        <h6>{{chat.timestamp|date:'medium'}}</h6>-->
+                        <chat-directive message="chat"></chat-directive>
+                    </ion-item>   
+                </ion-list>
+           
+        
+            
+        
+        </ion-content>
+        <div class="bar bar-footer bar-light">
+            <div class="button-bar">
+                <a class="button button-icon icon ion-ios-chatboxes" href="#/roomlist"></a>
+                <a class="button button-icon icon ion-settings" href="#/settings"></a>
+            </div>
+        </div>         
+       
+    </ion-side-menu-content>
+</ion-side-menus>  
