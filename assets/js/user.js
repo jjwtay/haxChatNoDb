@@ -17,7 +17,10 @@ angular.module("haxChatNoDb")
         meStored.nickname = nick;
         localStorage.haxChatNoDb = JSON.stringify(meStored); 
         io.socket.get("/user/join", {user: meStored}, function(user){
-            console.log("here we go", user);
+            console.log(me, user);
+            for(var room in me.rooms){
+                user.rooms[room].chats = me.rooms[room].chats;
+            }
             me = user;
 
             $rootScope.$broadcast("User.updated", user);

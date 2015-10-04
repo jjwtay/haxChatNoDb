@@ -23,6 +23,7 @@ module.exports = {
             
             //grab all users in each room
             returnUser.rooms[room] = {
+                name: room,
                 users: [],
                 chats: []
             }; 
@@ -71,9 +72,13 @@ module.exports = {
         var room = req.param("room");
         var message = req.param("message");
         
-        sails.sockets.broadcast(room, "message", {nick: nick, room: room, message: message, timestamp: new Date().getTime()});
+        sails.sockets.broadcast(room, "message", {type: "text", nick: nick, room: room, message: message, timestamp: new Date().getTime()});
         res.json({});
         
+    },
+    
+    audio: function(req, res){
+        res.json({});    
     }
 };
 
