@@ -32,6 +32,11 @@ angular.module('haxChatNoDb', ['ionic'])
             templateUrl: 'templates/room.html',
             controller: 'RoomCtrl'
         })
+        .state('settings', {
+            url: '/settings',
+            templateUrl: 'templates/settings.html',
+            controller: 'SettingsCtrl'
+        })
     
     $urlRouterProvider.otherwise('/login');
 })

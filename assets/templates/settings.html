@@ -1,0 +1,91 @@
+<ion-header-bar align-title="center">
+    <h1 class="title">Settings</h1>
+</ion-header-bar>
+<ion-content>
+    <form ng-submit="changeNick()">
+    <div class="list">
+      <div class="item item-divider">
+        Change nickname  
+      </div>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="{{data.me.nickname}}" ng-model="data.newNick">
+        </label>
+        <button class="button button-small">
+          Save
+        </button>
+        <button class="button button-small" ng-click="clearField('newNick')">
+            Cancel  
+        </button>
+      </div>
+
+    </div>
+    </form>
+<ul class="list">
+  <div class="item item-divider">
+    Active Room Sounds
+  </div>
+  <li class="item item-toggle">
+     User Enters
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="data.newSettings.enter">
+       <div class="track" >
+         <div class="handle"></div>
+       </div>
+     </label>
+  </li>
+  <li class="item item-toggle">
+     User leaves
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="data.newSettings.leave">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+  </li> 
+  <li class="item item-toggle">
+     New message
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="data.newSettings.message">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+  </li>    
+  <div class="item item-divider">Keyword alerts</div>
+
+  <li class="item item-toggle">
+     Message with Keyword
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="data.newSettings.keywords">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+  </li>
+  <div class="item item-divider">Keywords</div>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="New keyword" ng-model="data.newKeyword">
+        </label>
+        <button class="button button-small" ng-click="addKeyword()">
+          Add
+        </button>
+        <button class="button button-small" ng-click="clearField('newKeyword')">
+            Cancel  
+        </button>
+      </div>    
+  <li class="item item-icon-right" ng-repeat="keyword in data.newSettings.keywordsList">{{keyword}}
+      <a ng-click="deleteKeyword($index)"><i class="icon ion-minus-circled assertive"></i> </a>
+    </li>
+  
+  
+
+</ul>    
+</ion-content>
+<ion-footer-bar class='bar-light'>
+    <div class="button-bar">
+        <a class="button button-icon icon ion-ios-chatboxes" href="#/roomlist"></a>
+        <a class="button button-icon icon ion-settings" href="#/settings"></a>
+    </div>    
+</ion-footer-bar>
