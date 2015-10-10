@@ -92,10 +92,10 @@ angular.module("haxChatNoDb")
                 me.rooms[room].chats.push({uuid: msg.uuid, type:"offline", room: room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has disconnected"});
             } */
             console.log(msg);
-            if(me.settings.leave){
+            /*if(me.settings.leave){
                 var audio = new Audio('sounds/doorclose.mp3');
                 audio.play();
-            }
+            }*/
             delete me.rooms[room].users[msg.useruuid];
             me.rooms[room].chats.push({uuid: msg.uuid, type:"offline", room: room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has disconnected"});
         }
@@ -105,10 +105,10 @@ angular.module("haxChatNoDb")
         /* old code for usinbg users string array, swithing to users hashmap 
         me.rooms[msg.room].users.push(msg.nickname);
         */
-        if(me.settings.enter){
+        /*if(me.settings.enter){
             var audio = new Audio("sounds/dooropen.mp3");
             audio.play();
-        }
+        }*/
         me.rooms[msg.room].users[msg.useruuid] = msg.nickname;
         
         me.rooms[msg.room].chats.push({uuid: msg.uuid, type: "joined", room: msg.room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has joined " + msg.room});
@@ -118,10 +118,10 @@ angular.module("haxChatNoDb")
         
     });
     io.socket.on("message", function(msg){
-        if(me.settings.message){
+       /* if(me.settings.message){
             var audio = new Audio("sounds/message.mp3");
             audio.play();
-        }
+        }*/
         me.rooms[msg.room].chats.push(msg);
         console.log(msg);
         $rootScope.$broadcast("User.update", msg);
