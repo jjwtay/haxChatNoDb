@@ -18,7 +18,7 @@
     </form>
     <ion-list >
         <ion-item ng-repeat="(key, value) in data.me.rooms" href="#/room/{{key}}">
-            {{key}}({{value.users.length}})
+            {{key}}({{keyCount(value.users)}})
             <!--<ion-delete-button class="ion-minus-circled" ng-click="delete(room)">
             </ion-delete-button>-->
         </ion-item>

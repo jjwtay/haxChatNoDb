@@ -22,7 +22,10 @@ angular.module("haxChatNoDb")
                 user.rooms[room].chats = me.rooms[room].chats;
             }
             me = user;
-
+            if(!meStored.uuid){
+                meStored.uuid = user.uuid;
+                localStorage.haxChatNoDb = JSON.stringify(meStored);
+            }
             $rootScope.$broadcast("User.updated", user);
             return callback(user); 
         });
@@ -62,14 +65,25 @@ angular.module("haxChatNoDb")
     io.socket.on("offline", function(msg){
         for(var room in me.rooms){
             //remove user from user array if in room
+            /* old code using user array 
             if(me.rooms[room].users.indexOf(msg.nickname) > -1){
-                me.rooms[room].users.splice(me.rooms[room].users.indexOf(msg.nickname), 1);    
-            }
+                me.rooms[room].users.splice(me.rooms[room].users.indexOf(msg.nickname), 1);
+                console.log(me.rooms[room]);
+                me.rooms[room].chats.push({uuid: msg.uuid, type:"offline", room: room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has disconnected"});
+            } */
+            delete me.rooms[room].users[msg.useruuid];
+            me.rooms[room].chats.push({uuid: msg.uuid, type:"offline", room: room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has disconnected"});
         }
         $rootScope.$broadcast("User.update", msg);
     });
     io.socket.on("join", function(msg){
+        /* old code for usinbg users string array, swithing to users hashmap 
         me.rooms[msg.room].users.push(msg.nickname);
+        */
+        
+        me.rooms[msg.room].users[msg.useruuid] = msg.nickname;
+        
+        me.rooms[msg.room].chats.push({uuid: msg.uuid, type: "joined", room: msg.room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has joined " + msg.room});
         $rootScope.$broadcast("User.update", msg);
     });
     io.socket.on("left", function(msg){

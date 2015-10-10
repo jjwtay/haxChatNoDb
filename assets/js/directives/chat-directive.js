@@ -1,6 +1,6 @@
 angular.module("haxChatNoDb")
 
-.directive("chatDirective", function($sce,$timeout,$filter){
+.directive("chatDirective", function($sce,$timeout,$filter,$window){
    return {
        restrict: 'AE',
        scope: {
@@ -10,24 +10,43 @@ angular.module("haxChatNoDb")
        link : function(scope, element, attrs){
             //console.log(scope.message.timestamp);
             scope.istrue = true;
+            scope.isnew = true;
+            scope.isfocused = true;
             var messageAge = new Date().getTime() - scope.message.timestamp;
             //scope.messag = $sce.trustAsHtml(scope.message.message);
             
             scope.renderHTML = function(html_code){
                 return $sce.trustAsHtml(fixMessage(html_code));
-            };            
-            if(new Date().getTime() - scope.message.timestamp < 5000){
-                scope.isnew = true;
-                scope.style = "background-color:aqua";
-                $timeout(function(){
-                    scope.style = "";
-                    scope.$apply();
-                }, 5000);
-                //scope.$apply();
-            } else {
-                console.log("old message ignore"); 
-                scope.isnew = false;
+            };   
+           
+           
+            $window.onfocus = function(){
+                console.log('focused prepare for magic');
+                scope.isfocused = true;
+                if(scope.isnew){
+                    $timeout(function(){
+                        scope.style = "";
+                        scope.isnew = false;
+                        scope.$apply();
+                    }, 5000);
+                }
             }
+            $window.onblur = function(){
+                scope.isfocused = false;    
+            }
+            var now = new Date().getTime();
+            var highlightfor = scope.message.timestamp + 5000 - now; 
+            if(now - scope.message.timestamp < 5000){
+                //scope.isnew = true;
+                scope.style = "background-color:aqua";
+                if(scope.isfocused){
+                    $timeout(function(){
+                        scope.style = "";
+                        scope.isnew = false;
+                        scope.$apply();
+                    }, highlightfor);
+                }
+            } 
            
             function findLinks(message){
                 return $filter('linky')(message);
@@ -36,10 +55,6 @@ angular.module("haxChatNoDb")
             function findImages(message){
                 var fixedMessage = "";
             
-                //grab .jpg's
-                //var jpgsarray = message.split(".jpg");
-                
-                //return fixedMessage;
                 return message;
             }
             function fixMessage(message){

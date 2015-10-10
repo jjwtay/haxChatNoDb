@@ -10,6 +10,8 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.sockets.html
  */
 
+var uuid = require('node-uuid');
+
 module.exports.sockets = {
 
 
@@ -124,7 +126,7 @@ module.exports.sockets = {
   ***************************************************************************/
   afterDisconnect: function(session, socket, cb) {
   //   // By default: do nothing.
-      sails.sockets.blast("offline", {nickname: socket.nickname});
+      sails.sockets.blast("offline", {nickname: socket.nickname, timestamp: new Date().getTime(), uuid: uuid.v1()});
       return cb();
   },
 

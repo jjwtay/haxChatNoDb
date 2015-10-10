@@ -2,6 +2,10 @@ angular.module("haxChatNoDb")
 
 .controller("RoomlistCtrl", ["$scope", "User", function($scope, User){
     $scope.data = {join:"", me: {}};
+    
+    $scope.keyCount = function(obj){
+        return Object.keys(obj).length;   
+    }
 
     User.me(function(me){
         $scope.data.me = JSON.parse(JSON.stringify(me)); 
