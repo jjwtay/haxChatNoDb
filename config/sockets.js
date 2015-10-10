@@ -126,7 +126,7 @@ module.exports.sockets = {
   ***************************************************************************/
   afterDisconnect: function(session, socket, cb) {
   //   // By default: do nothing.
-      sails.sockets.blast("offline", {nickname: socket.nickname, timestamp: new Date().getTime(), uuid: uuid.v1()});
+      sails.sockets.blast("offline", {nickname: socket.nickname, timestamp: new Date().getTime(), uuid: uuid.v1(), useruuid: socket.uuid});
       return cb();
   },
 

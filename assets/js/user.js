@@ -71,6 +71,7 @@ angular.module("haxChatNoDb")
                 console.log(me.rooms[room]);
                 me.rooms[room].chats.push({uuid: msg.uuid, type:"offline", room: room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has disconnected"});
             } */
+            console.log(msg);
             delete me.rooms[room].users[msg.useruuid];
             me.rooms[room].chats.push({uuid: msg.uuid, type:"offline", room: room, timestamp: msg.timestamp, nick: "Server", message: msg.nickname + " has disconnected"});
         }
